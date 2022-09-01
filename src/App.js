@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+//Components
+import Products from "./Components/Products";
+import ProductDetail from "./Components/ProductDetail";
+import Navbar from "./Components/Navbar";
+import Cart from "./Components/Cart";
+//Library
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.min"
+import {Routes , Route , Navigate} from "react-router-dom";
+//Context
+import ProductContentProvider from "./Context/ProductContectProvider";
+import CardContextProvider from "./Context/CardContextProvider";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <ProductContentProvider>
+            <CardContextProvider>
+                <Navbar />
+                <Routes>
+                    <Route path="/Products/:id" element={<ProductDetail />}/>
+                    <Route path="/Products" element={<Products />}/>
+                    <Route path="/Cart" element={<Cart />}/>
+                    <Route path="/" element={<Navigate to="/Products" />}/>
+                </Routes>
+            </CardContextProvider>
+        </ProductContentProvider>
+    );
+};
 
 export default App;
