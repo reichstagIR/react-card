@@ -1,16 +1,19 @@
-import React , {useContext} from 'react';
+import React from 'react';
 //Library
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 //Helper
 import {getQuantity, shotern} from "../../Helper/functions";
-//Context
-import {CardContext} from "../../Context/CardContextProvider";
+//Redux
+import {useSelector , useDispatch} from "react-redux";
+import {removeItem , increase , decrease} from "../../Redux/Card/CardAction";
 
 const CartItem = ({data}) => {
 
-    const {state , dispatch} = useContext(CardContext);
+    const cardState = useSelector(state => state.cardState);
+    const dispatch = useDispatch();
+
 
     return (
         <div className="bg-white border rounded d-flex align-items-center justify-content-between px-4 py-3 mb-4 shadow">
@@ -19,14 +22,14 @@ const CartItem = ({data}) => {
             </div>
             <div>
                 <span className="h4 d-block text-primary mb-2">{shotern(data.title)} . . .</span>
-                <span className="text-success h5">{data.quantity * data.price}$</span>
+                <span className="text-success h5">{(data.quantity * data.price).toFixed(2)}$</span>
             </div>
             <div>
                 <Button>{data.quantity}</Button>
             </div>
             <div>
-                {getQuantity(state , data.id) >= 1 && <Button variant="primary" className="mx-1" onClick={() => dispatch({type : "INCREASE" , payload : data})}>+</Button>}
-                {getQuantity(state , data.id) === 1 ? <Button variant="primary" className="mx-1" onClick={() => dispatch({type : "REMOVE_ITEM" , payload : data})}><FontAwesomeIcon icon={faTrash} color="white"/></Button> : <Button variant="primary" className="mx-1" onClick={() => dispatch({type : "DECREASE" , payload : data})}>-</Button>}
+                {getQuantity(cardState , data.id) >= 1 && <Button variant="primary" className="mx-1" onClick={() => dispatch(increase(data))}>+</Button>}
+                {getQuantity(cardState , data.id) === 1 ? <Button variant="primary" className="mx-1" onClick={() => dispatch(removeItem(data))}><FontAwesomeIcon icon={faTrash} color="white"/></Button> : <Button variant="primary" className="mx-1" onClick={() => dispatch(decrease(data))}>-</Button>}
             </div>
         </div>
     );

@@ -1,19 +1,34 @@
-import React , {useContext} from 'react';
+import React , {useEffect} from 'react';
 //Components
 import Product from "./Shared/Product";
 //Library
-import {Container, Row , Col} from "react-bootstrap";
-//Context
-import {ProductsContext} from "../Context/ProductContectProvider";
+import {Container, Row , Col , Spinner} from "react-bootstrap";
+//Redux
+import {useSelector , useDispatch} from "react-redux";
+import fetchProducts from "../Redux/Products/ProductsAction";
 
 const Products = () => {
 
-    const Products = useContext(ProductsContext);
+    const dispatch = useDispatch();
+    const productState = useSelector(state => state.productsState);
+
+    useEffect(() => {
+        !productState.products.length && dispatch(fetchProducts());
+    }, []);
+
 
     return (
-        <Container>
+        <Container className="pb-5">
             <Row>
-                {Products.map(item => <Col lg={3} md={6} sm={12} className="mt-3" key={item.id}><Product data={item}/></Col>)}
+                {productState.isLoading ?
+                    <div style={{height : "calc(100vh - 180px)" , display : "flex" , alignItems : "center" , justifyContent : "center"}}><Spinner animation="border"/></div>
+                    :
+                    productState.products.map(item =>
+                        <Col lg={3} md={6} sm={12} className="mt-3" key={item.id}>
+                            <Product data={item}/>
+                        </Col>
+                    )}
+                {productState.error}
             </Row>
         </Container>
     );
