@@ -1,12 +1,38 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Overview
 
-## Available Scripts
+A simple shopping cart and store that shares information between components using Redux. This program used to work with Context, but it was later upgraded to Redux.
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+## Video
+[![Watch the video](https://youtu.be/0zUGNLv6ds4)](https://youtu.be/0zUGNLv6ds4)
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/hussain-hamdi/reactstore
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
